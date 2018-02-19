@@ -7,7 +7,7 @@ public class Book {
   private String title;
   private String publisher;
   private Integer publicationYear;
-  private Integer price;
+  private Float price;
   private String typeBook;
 
   public Book(String ISBN,
