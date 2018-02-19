@@ -43,12 +43,13 @@ public class BookDao {
 
   public boolean addBook(Book book) {
 
-    return true;
+    return updateBook(book);
   }
 
   public boolean updateBook(Book book) {
+    /* insert or replace */
 
-    return true;
+    return true;//succeeded
   }
 
   public boolean deleteBook(Book book) {
@@ -239,7 +240,7 @@ public class BookDao {
     PreparedStatement stmt = null;
     ArrayList<Book> books = new ArrayList<>();
     try {
-        stmt = con.prepareStatement();
+        stmt = con.prepareStatement(query);
         stmt.setString(1, authorName);
 
         ResultSet rs = stmt.executeQuery(query);

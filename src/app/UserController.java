@@ -34,23 +34,42 @@ public class UserController {
 
         switch (userChoice) {
             case "1":
+                unimplemented();
                 break;
 
             case "2":
+                unimplemented();
                 break;
 
             case "3":
+                deleteBook();
                 break;
 
             case "4":
+                searchBookByPhrase();
                 break;
 
             case "5":
+                seeAllBooks();
                 break;
 
             case "6":
+                seeAllByAuthorName();
                 break;
         }
+    }
+
+    private void deleteBook() {}
+
+    private void searchBookByPhrase() {}
+
+    private void seeAllBooks() {}
+
+    private void seeAllByAuthorName() {}
+
+    private void unimplemented() {
+
+      view.printLine("\n sorry, unimplemented \n");
     }
 
     private String getNonexistentBookName() {
