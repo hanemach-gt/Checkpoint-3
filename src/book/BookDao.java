@@ -83,6 +83,60 @@ public class BookDao {
 
   public Book getBookByName(String name) {
 
+    String query = "SELECT ISBN,"
+                  +  "authors.name AS author_name,"
+                  +  "title,"
+                  +  "publishers.name AS publisher_name,"
+                  +  "publication_year,"
+                  +  "price,"
+                  +  "type_books.type AS type_name FROM books"
+                  +  "INNER JOIN authors ON author = authors.author_id"
+                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id"
+                  +  "INNER JOIN type_books ON books.type = type_books.type_id"
+                  +  "WHERE title = ? LIMIT 1;";
+
+    PreparedStatement queryStmt = null;
+    boolean succeeded = false;
+    try {
+
+        queryStmt = con.prepareStatement(query);
+        queryStmt.setString(1, name);
+        ResultSet rs = queryStmt.executeQuery();
+        if(rs.next()) {
+
+            String ISBN = rs.getString("ISBN");
+            String author = rs.getString("author_name");
+            String title = rs.getString("title");
+            String publisher = rs.getString("publisher_name");
+            Integer year = rs.getInt("publication_year");
+            Float price = rs.getFloat("price");
+            String type = rs.getString("type_name");
+
+            return new Book(ISBN,
+                            author,
+                            title,
+                            publisher,
+                            year,
+                            price,
+                            type);
+        }
+
+    } catch (SQLException e) {
+
+        ExceptionLog.add(e);
+    } finally {
+
+        try {
+
+          if (queryStmt != null) {
+
+            queryStmt.close();
+          }
+        } catch (SQLException e) {
+
+          ExceptionLog.add(e);
+        }
+    }
     return null;
   }
 
