@@ -15,7 +15,7 @@ public class Book {
                 String title,
                 String publisher,
                 Integer publicationYear,
-                Integer price,
+                Float price,
                 String typeBook) {
 
     this.ISBN = ISBN;
