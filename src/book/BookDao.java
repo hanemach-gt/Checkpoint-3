@@ -53,7 +53,32 @@ public class BookDao {
 
   public boolean deleteBook(Book book) {
 
-    return true;
+    String deleteString = "DELETE FROM books WHERE title = ?";
+    PreparedStatement deleteStmt = null;
+    boolean succeeded = false;
+    try {
+
+        deleteStmt = con.prepareStatement(deleteString);
+        deleteStmt.setString(1, book.getName());
+        succeeded = deleteStmt.executeUpdate() > 0;
+
+    } catch (SQLException e) {
+
+        ExceptionLog.add(e);
+    } finally {
+
+        try {
+
+          if (deleteStmt != null) {
+
+            deleteStmt.close();
+          }
+        } catch (SQLException e) {
+
+          ExceptionLog.add(e);
+        }
+    }
+    return succeeded;
   }
 
   public Book getBookByName(String name) {
@@ -68,16 +93,16 @@ public class BookDao {
 
   public List<Book> getAllBooks() {
 
-    String query = "select ISBN,"
+    String query = "SELECT ISBN,"
                   +  "authors.name AS author_name,"
                   +  "title,"
                   +  "publishers.name AS publisher_name,"
                   +  "publication_year,"
                   +  "price,"
                   +  "type_books.type AS type_name FROM books"
-                  +  "inner join authors on author = authors.author_id"
-                  +  "inner join publishers on publisher = publishers.publisher_id"
-                  +  "inner join type_books on books.type = type_books.type_id"
+                  +  "INNER JOIN authors ON author = authors.author_id"
+                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id"
+                  +  "INNER JOIN type_books ON books.type = type_books.type_id"
                   +  ";";
 
     Statement stmt = null;
