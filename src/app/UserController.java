@@ -1,7 +1,9 @@
 package app;
 
 import java.util.List;
+import java.util.ArrayList;
 import book.Book;
+import book.BookDao;
 
 public class UserController {
 
@@ -10,6 +12,68 @@ public class UserController {
     public UserController(UserView view) {
 
         this.view = view;
+    }
+
+    public void start() {
+
+        boolean requestedExit = false;
+        do {
+
+            MenuOption userOption = view.getMenuOptionFromUserInput(" Please choose option: ");
+            if (userOption.getId().equals("0")) {
+                requestedExit = true;
+                view.clearScreen();
+            } else {
+
+                handleUserChoice(userOption.getId());
+            }
+        } while (!requestedExit);
+    }
+
+    private void handleUserChoice(String userChoice) {
+
+        switch (userChoice) {
+            case "1":
+                break;
+
+            case "2":
+                break;
+
+            case "3":
+                break;
+
+            case "4":
+                break;
+
+            case "5":
+                break;
+
+            case "6":
+                break;
+        }
+    }
+
+    private String getNonexistentBookName() {
+
+        BookDao bookDao = new BookDao();
+        bookDao.initializeConnection();
+
+        String name;
+        boolean providedValidName = false;
+        do {
+            name = this.view.getStringFromUserInput(view.newBookNameQuestion);
+            if (bookDao.getBookByName(name) == null) {
+
+                providedValidName = true;
+            } else {
+
+                view.printLine(view.nameAlreadyTaken);
+            }
+
+        } while(!providedValidName);
+
+        bookDao.finalizeConnection();
+        return name;
     }
 
     public String getNameFromUserInput(String prompt, String disallowedMessage, List<String> allowedNames) {
@@ -52,13 +116,29 @@ public class UserController {
         return name;
     }
 
+    private List<String> bookCollectionToStringCollection(List<Book> books) {
+
+      List<String> names = new ArrayList<>();
+      for (Book book : books) {
+
+        names.add(book.getName());
+      }
+      return names;
+    }
+
     public Book getBookFromUserInput(String nameQuestion, String outOfRangeError, String groupName) {
 
-        List<Book> books = null;
-        List<String> allowedBookNames = null;//bookCollectionToStringCollection();
+        BookDao bookDao = new BookDao();
+        bookDao.initializeConnection();
+
+        List<Book> books = bookDao.getAllBooks();
+        List<String> allowedBookNames = bookCollectionToStringCollection(books);
 
         String name = getNameFromUserInput(nameQuestion, outOfRangeError, allowedBookNames);
 
-        return null;
+        Book book = bookDao.getBookByName(name);
+
+        bookDao.finalizeConnection();
+        return book;
     }
 }

@@ -1,13 +1,12 @@
 package app;
 
-import java.sql.SQLException;
 import java.util.Scanner;
-import java.util.Iterator;
 
 public class UserView {
 
     public String nameAlreadyTaken = "\n This name cannot be used.\n";
     public String nameOutOfRange = "\n You need to provide an already existing name.\n";
+    public String newBookNameQuestion = "Please provide new book name";
 
     protected Menu menu;
 
@@ -15,8 +14,9 @@ public class UserView {
 
     private static Scanner scanner;
 
-    protected UserView() {
+    protected UserView(Menu menu) {
 
+        this.menu = menu;
         scanner = new Scanner(System.in);
     }
 

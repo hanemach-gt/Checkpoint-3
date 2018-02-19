@@ -56,6 +56,11 @@ public class BookDao {
     return true;
   }
 
+  public Book getBookByName(String name) {
+
+    return null;
+  }
+
   public Book getBookByStringOrYear(String phrase) {
 
     return null;

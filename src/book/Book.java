@@ -26,4 +26,9 @@ public class Book {
     this.price = price;
     this.typeBook = typeBook;
   }
+
+  public String getName() {
+
+    return title;
+  }
 }
