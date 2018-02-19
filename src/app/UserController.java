@@ -59,17 +59,46 @@ public class UserController {
         }
     }
 
-    private void deleteBook() {}
+    private void deleteBook() {
 
-    private void searchBookByPhrase() {}
+      BookDao bookDao = new BookDao();
+      bookDao.initializeConnection();
 
-    private void seeAllBooks() {}
+      view.print(bookCollectionToString(bookDao.getAllBooks()));
 
-    private void seeAllByAuthorName() {}
+      Book book = getBookFromUserInput(bookDao, "\n Please provide book name: ", "\n Such book does not exist in database");
+
+      if (bookDao.deleteBook(book)) {
+
+        view.printLine("Deletion succeeded");
+      } else {
+
+        view.printLine("Deletion failed");
+      }
+
+      bookDao.finalizeConnection();
+
+    }
+
+    private void searchBookByPhrase() {unimplemented();}
+
+    private void seeAllBooks() {unimplemented();}
+
+    private void seeAllByAuthorName() {unimplemented();}
 
     private void unimplemented() {
 
       view.printLine("\n sorry, unimplemented \n");
+    }
+
+    private String bookCollectionToString(List<Book> books) {
+
+      String result = "\n";
+      for (Book book : books) {
+
+        result += book.toString();
+      }
+      return result + "\n";
     }
 
     private String getNonexistentBookName() {
@@ -145,19 +174,25 @@ public class UserController {
       return names;
     }
 
-    public Book getBookFromUserInput(String nameQuestion, String outOfRangeError, String groupName) {
+    public Book getBookFromUserInput(String nameQuestion, String outOfRangeError) {
 
         BookDao bookDao = new BookDao();
         bookDao.initializeConnection();
 
-        List<Book> books = bookDao.getAllBooks();
-        List<String> allowedBookNames = bookCollectionToStringCollection(books);
-
-        String name = getNameFromUserInput(nameQuestion, outOfRangeError, allowedBookNames);
-
-        Book book = bookDao.getBookByName(name);
+        Book book = getBookFromUserInput(bookDao, nameQuestion, outOfRangeError);
 
         bookDao.finalizeConnection();
         return book;
+    }
+
+    public Book getBookFromUserInput(BookDao bookDao, String nameQuestion, String outOfRangeError) {
+
+      List<Book> books = bookDao.getAllBooks();
+      List<String> allowedBookNames = bookCollectionToStringCollection(books);
+
+      String name = getNameFromUserInput(nameQuestion, outOfRangeError, allowedBookNames);
+
+      Book book = bookDao.getBookByName(name);
+      return book;
     }
 }

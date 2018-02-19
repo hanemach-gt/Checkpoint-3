@@ -84,16 +84,16 @@ public class BookDao {
 
   public Book getBookByName(String name) {
 
-    String query = "SELECT ISBN,"
-                  +  "authors.name AS author_name,"
-                  +  "title,"
-                  +  "publishers.name AS publisher_name,"
-                  +  "publication_year,"
-                  +  "price,"
-                  +  "type_books.type AS type_name FROM books"
-                  +  "INNER JOIN authors ON author = authors.author_id"
-                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id"
-                  +  "INNER JOIN type_books ON books.type = type_books.type_id"
+    String query = "SELECT ISBN, "
+                  +  "authors.name AS author_name, "
+                  +  "title, "
+                  +  "publishers.name AS publisher_name, "
+                  +  "publication_year, "
+                  +  "price, "
+                  +  "type_books.type AS type_name FROM books "
+                  +  "INNER JOIN authors ON author = authors.author_id "
+                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id "
+                  +  "INNER JOIN type_books ON books.type = type_books.type_id "
                   +  "WHERE title = ? LIMIT 1;";
 
     PreparedStatement queryStmt = null;
@@ -156,16 +156,16 @@ public class BookDao {
 
   public List<Book> getAllBooks() {
 
-    String query = "SELECT ISBN,"
-                  +  "authors.name AS author_name,"
-                  +  "title,"
-                  +  "publishers.name AS publisher_name,"
-                  +  "publication_year,"
-                  +  "price,"
-                  +  "type_books.type AS type_name FROM books"
-                  +  "INNER JOIN authors ON author = authors.author_id"
-                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id"
-                  +  "INNER JOIN type_books ON books.type = type_books.type_id"
+    String query = "SELECT ISBN, "
+                  +  "authors.name AS author_name, "
+                  +  "title, "
+                  +  "publishers.name AS publisher_name, "
+                  +  "publication_year, "
+                  +  "price, "
+                  +  "type_books.type AS type_name FROM books "
+                  +  "INNER JOIN authors ON author = authors.author_id "
+                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id "
+                  +  "INNER JOIN type_books ON books.type = type_books.type_id "
                   +  ";";
 
     Statement stmt = null;
@@ -181,7 +181,7 @@ public class BookDao {
         }
     } catch (SQLException e) {
 
-        ExceptionLog.add(e);
+        e.printStackTrace();//ExceptionLog.add(e);
     } finally {
 
         try {
@@ -225,16 +225,16 @@ public class BookDao {
   }
 
   public List<Book> getBooksByAuthorName(String authorName) {
-    String query = "SELECT ISBN,"
-                  +  "authors.name AS author_name,"
-                  +  "title,"
-                  +  "publishers.name AS publisher_name,"
-                  +  "publication_year,"
-                  +  "price,"
-                  +  "type_books.type AS type_name FROM books"
-                  +  "INNER JOIN authors ON author = authors.author_id"
-                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id"
-                  +  "INNER JOIN type_books ON books.type = type_books.type_id"
+    String query = "SELECT ISBN, "
+                  +  "authors.name AS author_name, "
+                  +  "title, "
+                  +  "publishers.name AS publisher_name, "
+                  +  "publication_year, "
+                  +  "price, "
+                  +  "type_books.type AS type_name FROM books "
+                  +  "INNER JOIN authors ON author = authors.author_id "
+                  +  "INNER JOIN publishers ON publisher = publishers.publisher_id "
+                  +  "INNER JOIN type_books ON books.type = type_books.type_id "
                   +  "WHERE author_name = ?;";
 
     PreparedStatement stmt = null;
